@@ -16,11 +16,11 @@ test:
 	./${FILENAME} test.txt
 solve: input.txt
 	./${FILENAME} input.txt
-solve1:
+solve1: input.txt
 	./solve.py
 test1:
 	./solve.py test.txt
-solve2:
+solve2: input.txt
 	./solve2.py
 test2:
 	./solve2.py test.txt
