@@ -34,7 +34,7 @@ if len(grouping) > 0:
 ranges = [[]]
 for i in range(len(start_seeds)//2):
     p = tuple(start_seeds[i*2:i*2+2])
-    ranges[0].append((p[0], p[0] + p[1], 0))
+    ranges[0].append((p[0], p[0] + p[1]))
 
 ranges[0].sort(key=lambda x: x[0])
 
@@ -45,7 +45,7 @@ for i, section in enumerate(mappings):
     print(i)
     print(80*"-")
     next_ranges = []
-    for s, e, o in ranges[i]:
+    for s, e in ranges[i]:
         to_remove = []
         for ds, ss, se, _ in section:
             inter = max(s, ss), min(e, se)
@@ -53,16 +53,16 @@ for i, section in enumerate(mappings):
             print(s, e, "|", ss, se, "|", inter)
             if inter[0] <= inter[1]:
                 to_remove.append(inter)
-                next_ranges.append((inter[0] + offset, inter[1] + offset, offset))
+                next_ranges.append((inter[0] + offset, inter[1] + offset))
         to_remove.sort(key=lambda x: x[0])
         print("to_remove", to_remove)
         while len(to_remove) > 0:
             rs, re = to_remove.pop(0)
             if s != rs:
-                next_ranges.append((s, rs, 0))
+                next_ranges.append((s, rs))
             s = re
         if s != e:
-            next_ranges.append((s, e, 0))
+            next_ranges.append((s, e))
 
     next_ranges.sort(key=lambda x: x[0])
     print("next_ranges", next_ranges)
