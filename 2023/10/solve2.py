@@ -81,13 +81,23 @@ while step != start:
     loop.append(step)
     #print(step)
 
+
+import matplotlib.pyplot as plt
+
+poly = geo.Polygon(loop)
+x,y = poly.exterior.xy
+
+plt.plot(x,y)
+plt.show()
+exit()
+
 #print(f"Loop: {loop}")
 print(len(loop)//2)
 
 
 inside = []
 count = 0
-poly = geo.Polygon(loop)
+poly = poly.simplify(0)
 for j in range(len(grid)):
     for i in range(len(grid[0])):
         #if grid[j][i] != {}:
