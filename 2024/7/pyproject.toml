@@ -18,4 +18,9 @@ features = ["pyo3/extension-module"]
 
 [tool.uv]
 cache-keys = [{file = "pyproject.toml"}, {file = "requirements.txt"}, {git = {commit = true}}, {file = "Cargo.toml"}, {file = "**/*.rs"}]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8.2",
+]
 #reinstall-package = ["factors-py"]
