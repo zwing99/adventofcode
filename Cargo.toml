@@ -1,5 +1,6 @@
 [workspace]
 
 members = [
-    "2024/7",
+  "2024/7",
+  "template_py_rs",
 ]
