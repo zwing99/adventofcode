@@ -1,0 +1,26 @@
+[build-system]
+build-backend = "maturin"
+requires = ["maturin>=1.7,<2.0"]
+
+[project]
+classifiers = [
+  "Programming Language :: Rust",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+name = "aoc"
+requires-python = ">=3.8"
+
+dynamic = ["version"]
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+
+[tool.uv]
+cache-keys = [{file = "pyproject.toml"}, {file = "requirements.txt"}, {git = {commit = true}}, {file = "Cargo.toml"}, {file = "**/*.rs"}]
+
+[dependency-groups]
+dev = [
+  "ruff>=0.8.2",
+]
+#reinstall-package = ["factors-py"]
