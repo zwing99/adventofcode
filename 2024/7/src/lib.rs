@@ -8,16 +8,16 @@ fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
     Ok((a + b).to_string())
 }
 
-fn mul(a: u128, b: u128) -> u128 {
+fn mul(a: u64, b: u64) -> u64 {
     a * b
 }
 
-fn add(a: u128, b: u128) -> u128 {
+fn add(a: u64, b: u64) -> u64 {
     a + b
 }
 
-fn concat(a: u128, b: u128) -> u128 {
-    format!("{}{}", a, b).parse::<u128>().unwrap()
+fn concat(a: u64, b: u64) -> u64 {
+    format!("{}{}", a, b).parse::<u64>().unwrap()
 }
 
 #[pyclass(eq, eq_int)]
@@ -28,9 +28,9 @@ enum Part {
 }
 
 #[pyfunction]
-fn bfs_rust(total: u128, target: u128, nums: Vec<u128>, part: Part) -> PyResult<u128> {
-    let mut visited = HashSet::<(u128, usize)>::new();
-    let mut queue = VecDeque::<(u128, usize)>::new();
+fn bfs_rust(total: u64, target: u64, nums: Vec<u64>, part: Part) -> PyResult<u64> {
+    let mut visited = HashSet::<(u64, usize)>::new();
+    let mut queue = VecDeque::<(u64, usize)>::new();
     let node_index: usize = 0;
     let start = nums[node_index];
     queue.push_front((start, node_index));
@@ -38,8 +38,8 @@ fn bfs_rust(total: u128, target: u128, nums: Vec<u128>, part: Part) -> PyResult<
     let mut found = false;
     let len_nums = nums.len();
     //println!("target: {}", target);
-    let p1funcs = vec![mul, add];
-    let p2funcs = vec![mul, add, concat];
+    let p1funcs: Vec<fn(u64, u64) -> u64> = vec![mul, add];
+    let p2funcs: Vec<fn(u64, u64) -> u64> = vec![mul, add, concat];
     let funcs = match part {
         Part::Part1 => &p1funcs,
         Part::Part2 => &p2funcs,
