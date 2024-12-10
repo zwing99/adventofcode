@@ -66,8 +66,3 @@ for i in range(len(processed_li)):
     check_sum += int(processed_li[i]) * i
 
 print(check_sum)
-
-# 91235952521 That's not the right answer; your answer is too low.
-# 91235952521
-# 91235952521
-# 6415184586041
