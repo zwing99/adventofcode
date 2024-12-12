@@ -56,7 +56,6 @@ for f in final_shapes:
         sides = 0
         if n != 0:
             print(f"{f.name}: {list(coords)}")
-        coords = f.geometry.exterior.coords
         direction = coords[0][0] - coords[-1][0], coords[0][1] - coords[-1][1]
         orig_direction = direction
         for i in range(len(coords) - 1):
