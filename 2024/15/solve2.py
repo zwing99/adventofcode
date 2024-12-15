@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import sys
 import os
-import debugpy
+import sys
+
 
 filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
 
@@ -60,6 +60,7 @@ def is_outside_bounds(pos):
     return pos[0] < 0 or pos[0] >= x_length or pos[1] < 0 or pos[1] >= y_length
 
 
+frames = []
 for n, m in enumerate(moves):
     d = directions.get(m)
     assert d
@@ -121,6 +122,7 @@ for n, m in enumerate(moves):
 
     # print(f"{m}")
     # print("\n".join(["".join(x) for x in grid]))
+    frames.append("\n".join(["".join(x) for x in grid]))
 
 print("\n".join(["".join(x) for x in grid]))
 
@@ -131,3 +133,63 @@ for y in range(y_length):
             total += 100 * y + x
 
 print(total)
+
+
+from PIL import Image, ImageDraw, ImageFont  # noqa
+from moviepy.editor import ImageClip, concatenate_videoclips  # noqa
+from moviepy.video.io.VideoFileClip import VideoFileClip  # noqa
+
+
+def ascii_to_png(ascii_art, output_file):
+    """Converts ASCII art to a PNG image."""
+
+    lines = ascii_art.split("\n")
+    width = max(len(line) for line in lines) * 8  # Assuming 8x8 font
+    height = len(lines) * 12  # Assuming 12px font height
+
+    img = Image.new("RGB", (width, height), "black")
+    draw = ImageDraw.Draw(img)
+
+    font = ImageFont.truetype("Courier New", 12)  # Use a monospaced font
+
+    y = 0
+    for line in lines:
+        draw.text((0, y), line, fill="green", font=font)
+        y += 12
+
+    img.save(output_file)
+
+
+def create_video_from_pngs(png_files, output_file):
+    """Creates a video from a list of PNG files."""
+
+    frame_rate = 16
+    chunk_size = 100
+    temp_files = []
+
+    for i in range(0, len(png_files), chunk_size):
+        # chunk = png_files[i : i + chunk_size]
+        # clips = [
+        #    ImageClip(png).set_duration(1 / frame_rate).set_fps(frame_rate)
+        #    for png in chunk
+        # ]
+        # video = concatenate_videoclips(clips)
+        temp_file = f"render/temp_chunk_{i}.mp4"
+        # video.write_videofile(temp_file, fps=frame_rate, codec="libx264")
+        temp_files.append(temp_file)
+
+    final_clips = [VideoFileClip(temp_file) for temp_file in temp_files]
+    final_video = concatenate_videoclips(final_clips)
+    final_video.write_videofile(output_file, fps=frame_rate)
+
+
+if not os.environ.get("RENDER_VIDEO"):
+    sys.exit(0)
+
+images = []
+for i, f in enumerate(frames):
+    iname = f"render/{i}.png"
+    ascii_to_png(f, f"render/{i}.png")
+    images.append(iname)
+
+create_video_from_pngs(images, "render.mp4")
