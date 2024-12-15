@@ -36,6 +36,7 @@ def test(noun, verb):
 for noun in range(100):
     for verb in range(100):
         if test(noun, verb) == 19690720:
+            print(noun, verb)
             print(100 * noun + verb)
 
 
