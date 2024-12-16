@@ -11,7 +11,7 @@ else
 	FILENAME=solve2.py
 endif
 
-.PHONY: solve, test, part2, solve2, test2, solve1, solve2
+.PHONY: solve, test, part2, solve2, test2, solve1, solve2, render
 test:
 	./${FILENAME} test.txt
 solve: input.txt
@@ -32,3 +32,5 @@ input.txt:
 	$(eval URL:=https://adventofcode.com/${YEAR}/day/${DAY}/input)
 	@echo curling ${URL}
 	@curl -s --cookie "${COOKIE}" ${URL} > input.txt
+render:
+	ffmpeg -framerate 30 -i 'render/%d.png' -c:v libx264 -pix_fmt yuv420p output.mp4
