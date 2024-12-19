@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from re import S
+from re import L, S
 import sys
 
 filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
@@ -53,12 +53,15 @@ def dfs(visited: dict, node: tuple[int, int], blocked: set, steps=0):
         dfs(visited, (x, y - 1), blocked, steps + 1)
 
 
+last_bad = (-1, -1)
 for i in range(len(all_bytes), START_BYTES, -1):
     visited = {}
     s = set(all_bytes[:i])
     dfs(visited, start, s)
     if end not in visited:
-        print(i, all_bytes[i - 1], "bad")
+        # print(i, all_bytes[i - 1], "bad")
+        last_bad = (i, all_bytes[i - 1])
     else:
         print(i, all_bytes[i - 1], "good")
+        print(*last_bad, "bad")
         break
