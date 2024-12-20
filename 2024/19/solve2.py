@@ -14,8 +14,6 @@ while lines[0]:
     inps.extend([x.strip() for x in line.split(",")])
 lines.pop(0)
 
-inps = set(inps)
-
 
 def dfs(whats_left, vistied: dict):
     if whats_left in vistied:
@@ -30,12 +28,9 @@ def dfs(whats_left, vistied: dict):
     return total
 
 
-# for line in lines:
-#     print("YES" if dfs(line) else "NO")
-
 full_total = 0
 visited = {}
 for line in lines:
-    print(line)
+    # print(line)
     full_total += dfs(line, visited)
 print(full_total)
