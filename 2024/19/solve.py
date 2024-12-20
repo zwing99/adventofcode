@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import typing as typ
 
 filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
 
@@ -14,21 +15,21 @@ while lines[0]:
     inps.extend([x.strip() for x in line.split(",")])
 lines.pop(0)
 
-inps = set(inps)
 
-
-def dfs(whats_left):
+def dfs(whats_left, visited: dict[str, bool]) -> bool:
+    if whats_left in visited:
+        return visited[whats_left]
     for i in inps:
         if i == whats_left:
+            visited[whats_left] = True
             return True
         if whats_left.startswith(i):
-            if dfs(whats_left[len(i) :]):
+            if dfs(whats_left[len(i) :], visited):
+                visited[whats_left] = True
                 return True
+    visited[whats_left] = False
     return False
 
 
-# for line in lines:
-#     print("YES" if dfs(line) else "NO")
-
-
-print(sum([1 for line in lines if dfs(line)]))
+visited: dict[str, bool] = dict()
+print(sum(1 for line in lines if dfs(line, visited)))
