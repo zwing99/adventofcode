@@ -87,13 +87,13 @@ i = 8 ** (progam_len + digit)
 while True:
     out = run_program(i, regBorig, regCorig, program)
     print(i, out)
+    digit = -1
+    while out[digit] == program[digit] and digit > (progam_len * -1):
+        digit -= 1
     if out == program:
         print(i, out)
         break
-    while out[digit] == program[digit]:
-        digit -= 1
     if out[digit] != program[digit]:
-        print(progam_len + digit)
         i += 8 ** (progam_len + digit)
 
 # 281474976710656 That's not the right answer; your answer is too high
