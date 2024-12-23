@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 
 import sys
+import aoc_2024_22
 
 filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
 
 with open(filename) as fh:
     lines = [int(line.strip()) for line in fh.readlines()]
+
+v = aoc_2024_22.do_it(lines)
+print(v)
+exit()
+
+## below is original python code
+
 
 a: list[list[int]] = []
 for sn in lines:

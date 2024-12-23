@@ -13,17 +13,17 @@ endif
 
 .PHONY: solve, test, part2, solve2, test2, solve1, solve2
 test:
-	./${FILENAME} test.txt
+	uv run ./${FILENAME} test.txt
 solve: input.txt
-	./${FILENAME} input.txt
+	uv run ./${FILENAME} input.txt
 solve1: input.txt
-	./solve.py
+	uv run ./solve.py
 test1:
-	./solve.py test.txt
+	uv run ./solve.py test.txt
 solve2: input.txt
-	./solve2.py
+	uv run ./solve2.py
 test2:
-	./solve2.py test.txt
+	uv run ./solve2.py test.txt
 part2: solve2.py
 solve2.py:
 	cp solve.py solve2.py
