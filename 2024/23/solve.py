@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from collections import deque
+from collections import Counter
 import sys
 
 filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
@@ -25,41 +25,62 @@ for line in lines:
 # print(mappings)
 # print(starts)
 
-rings = set()
 
-
-def dfs(node: str, depth: int, visited: str, path: list[str]):
+def dfs(node: str, depth: int, visited: set, path: list[str], max_depth, rings):
     if node in visited:
         return
-    if path[0] in mappings[node]:
+    if path[0] in mappings[node] and len(path) > 2:
         rings.add(tuple(sorted(path)))
+    if depth == max_depth:
+        return
     visited.add(node)
     for c in mappings[node]:
-        dfs(c, depth + 1, visited, path + [c])
+        dfs(c, depth + 1, visited, path + [c], max_depth, rings)
 
 
-for start in starts:
-    # print(start)
-    dfs(start, 1, set(), [start])
+def part1():
+    rings = set()
 
-# print(rings)
+    for start in starts:
+        visited = set()
+        if start.startswith("t"):
+            dfs(start, 1, visited, [start], 3, rings)
 
-max_size = 0
-max_ring = None
-rings = list(rings)
-rings.sort(key=lambda x: len(x), reverse=True)
-for r in rings:
-    # print(r)
-    all_connections = True
-    for i in r:
-        rest = set(r) - {i}
-        if set(mappings[i]).intersection(rest) != rest:
-            all_connections = False
+    print("----Part1----")
+    print(len(rings))
+
+
+def part2():
+    rings = set()
+
+    for start in starts:
+        visited = set()
+        dfs(start, 1, visited, [start], len(starts), rings)
+
+    # print(rings)
+
+    max_size = 0
+    max_ring = None
+    rings = list(rings)
+    rings.sort(key=lambda x: len(x), reverse=True)
+    # print(f"Len: {len(rings)}")
+    # print(f"SizeCounts: {Counter([len(r) for r in rings])}")
+    for r in rings:
+        # print(r)
+        all_connections = True
+        for i in r:
+            rest = set(r) - {i}
+            if set(mappings[i]).intersection(rest) != rest:
+                all_connections = False
+                break
+        if all_connections and len(r) > max_size:
+            max_size = len(r)
+            max_ring = r
             break
-    if all_connections and len(r) > max_size:
-        max_size = len(r)
-        max_ring = r
-        break
 
-print("-------------")
-print(",".join(max_ring))
+    print("----Part2----")
+    print(",".join(max_ring))
+
+
+part1()
+part2()
