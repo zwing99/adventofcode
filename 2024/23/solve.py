@@ -39,6 +39,7 @@ def dfs(node: str, depth: int, visited: set, path: list[str], max_depth, rings):
 
 
 def part1():
+    print("----Part1----")
     rings = set()
 
     for start in starts:
@@ -46,16 +47,18 @@ def part1():
         if start.startswith("t"):
             dfs(start, 1, visited, [start], 3, rings)
 
-    print("----Part1----")
     print(len(rings))
 
 
 def part2():
+    print("----Part2----")
     rings = set()
 
+    # print(len(starts))
     for start in starts:
         visited = set()
         dfs(start, 1, visited, [start], len(starts), rings)
+    # print("done with rings finding")
 
     # print(rings)
 
@@ -78,7 +81,6 @@ def part2():
             max_ring = r
             break
 
-    print("----Part2----")
     print(",".join(max_ring))
 
 
