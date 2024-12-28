@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-from collections import defaultdict
+from collections import defaultdict, Counter
 import sys
+
+sys.setrecursionlimit(10000)
 
 filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
 
@@ -18,8 +20,14 @@ for line in lines:
 def dfs(node: str, path: list[str]):
     if node == "end":
         return [path + ["end"]]
-    if (node.islower() or node == "start") and node in path:
+    if node == "start" and path:
         return None
+    if node.islower():
+        c = Counter([x for x in path if x.islower()])
+        if c and c.most_common(1)[0][1] > 1 and node in path:
+            return None
+        elif c:
+            pass
     paths = []
     for neighbor in graph[node]:
         if x := dfs(neighbor, path + [node]):
@@ -29,5 +37,5 @@ def dfs(node: str, path: list[str]):
 
 paths = dfs("start", [])
 for p in paths:
-    print(p)
+    print(",".join(p))
 print(len(paths))
