@@ -1,0 +1,35 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+tab_width = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Python
+[*.py]
+indent_size = 4
+tab_width = 4
+
+# Markdown
+[*.md]
+indent_size = 2
+tab_width = 2
+
+# Makefiles
+[{Makefile,*.mak,*.mk,*.make}]
+indent_style = tab
+tab_width = 4
+
+# config files
+[{*.yml,*.yaml,*.toml,*.ini}]
+indent_size = 2
+tab_width = 2
+
+# Shell
+[{*.sh,*.bash,*.zsh}]
+indent_size = 4
+tab_width = 4

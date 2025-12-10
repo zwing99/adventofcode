@@ -1,0 +1,47 @@
+# E,W=pyflakes, F=Pycodestyle, I=isort
+# https://docs.astral.sh/ruff/rules/
+lint.explicit-preview-rules = true # preview rules are enabled one by one explicitly https://docs.astral.sh/ruff/preview/#selecting-single-preview-rules
+lint.ignore = [
+  "E402", # This rule conflicts with our isort rules
+  "RET504", # This rule is not helpful for debugging
+  "RUF012", # this fights pydantic so prolly not worth it "https://github.com/astral-sh/ruff/issues/5243"
+  "ISC001",
+]
+lint.preview = true
+lint.select = [
+  "E",
+  "W",
+  "F",
+  "I",
+  "ASYNC",
+  "RUF029",
+  "RUF006",
+  "BLE",
+  "B",
+  "C4",
+  "DTZ",
+  "FA",
+  "ISC",
+  "LOG",
+  "INP",
+  "PIE",
+  "PT",
+  "RET",
+  "SLOT",
+  "RUF",
+]
+
+# formating line length
+line-length = 88
+
+[lint.pycodestyle]
+# while ruff format is 88 this allows for some overflow on long string lines
+max-line-length = 120
+
+[lint.isort]
+section-order = [
+  "future",
+  "standard-library",
+  "third-party",
+  "local-folder",
+]
