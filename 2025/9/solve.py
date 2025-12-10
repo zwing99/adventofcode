@@ -12,7 +12,7 @@ def area(a, b):
 
 
 max_area = 0
-for i in range(0, len(lines) - 1):
+for i in range(len(lines) - 1):
     for j in range(i + 1, len(lines)):
         if (a := area(lines[i], lines[j])) > max_area:
             max_area = a

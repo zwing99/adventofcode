@@ -16,7 +16,7 @@ def area(a, b):
 shp = shapely.geometry.polygon.Polygon(lines)
 
 max_area = 0
-for i in range(0, len(lines) - 1):
+for i in range(len(lines) - 1):
     for j in range(i + 1, len(lines)):
         box = shapely.geometry.box(lines[i][0], lines[i][1], lines[j][0], lines[j][1])
         if shp.contains(box):
