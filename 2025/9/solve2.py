@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import shapely
-
 import sys
+
+import shapely
 
 filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
 

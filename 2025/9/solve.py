@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-from math import fabs
-
 import sys
 
 filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
